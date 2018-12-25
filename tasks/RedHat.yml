@@ -32,7 +32,7 @@
 - name: Pause a while
   pause:
     seconds: "{{elasticsearch_pausetime}}"
-  when: elasticsearch_up|changed
+  when: elasticsearch_up is changed
 
 - name: Copy index templates
   copy:
