@@ -1,0 +1,15 @@
+---
+- name: Load the content of {{item.item.key}}.json
+  command: "/bin/cat /var/cache/ansible/{{item.item.key}}.json"
+  register: this
+  changed_when: False
+
+- name: Uplod index templates for {{item.item.key}}
+  uri:
+    url: "http://localhost:{{elasticsearch_port}}/_template/{{item.item.key}}"
+    method: PUT
+    headers:
+      Content-type: application/json
+    return_content: yes
+    validate_certs: no
+    body: "{{this.stdout}}"
